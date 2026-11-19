@@ -1,0 +1,21 @@
+{
+  "notes": [
+    "夹具4：共享能力去重影响排名。",
+    "便宜方案 {leg} 同时向两个项目授予未申报的 shared.secret，按 (project,scope,capability) 去重后计 2；",
+    "较贵方案 {a,b} 未申报为 0，尽管成本更高仍在第一级目标胜出。",
+    "终态 {a,b,leg} 可直接展示共享对在两个项目各计一次的去重计数。"
+  ],
+  "packages": [
+    {"id": "a", "project": "P1", "capabilities": [["x", "need1"]], "cost": 3, "conflicts": [], "requires": []},
+    {"id": "b", "project": "P2", "capabilities": [["y", "need2"]], "cost": 3, "conflicts": [], "requires": []},
+    {"id": "leg", "project": "P1", "capabilities": [["x", "need1"], ["shared", "secret"]], "cost": 1, "conflicts": [], "requires": []},
+    {"id": "leg2", "project": "P2", "capabilities": [["y", "need2"], ["shared", "secret"]], "cost": 1, "conflicts": [], "requires": []}
+  ],
+  "projects": [
+    {"id": "P1", "required": [["x", "need1"]], "forbidden": []},
+    {"id": "P2", "required": [["y", "need2"]], "forbidden": []}
+  ],
+  "replacements": [],
+  "old_state": ["leg", "leg2"],
+  "must_keep": []
+}

@@ -1,0 +1,25 @@
+{
+  "notes": [
+    "夹具2：终态静态最优但不可落地。",
+    "静态枚举下 {z} 满足全部终态约束且目标值最优，但 z 不覆盖必保能力 r.k；",
+    "必保能力只由 old 覆盖，而 old 与 z 冲突，任何过渡状态都无法同时满足，故无可达目标。",
+    "old 自带未申报能力 r.legacy，保证 {z} 在静态目标排序中胜出。"
+  ],
+  "packages": [
+    {"id": "old", "project": "P1", "capabilities": [["r", "k"], ["r", "legacy"]], "cost": 5, "conflicts": ["z"], "requires": []},
+    {"id": "z", "project": "P1", "capabilities": [["r", "need"]], "cost": 1, "conflicts": ["old"], "requires": []},
+    {"id": "bridge", "project": "P1", "capabilities": [["r", "k"]], "cost": 9, "conflicts": ["z"], "requires": []}
+  ],
+  "projects": [
+    {
+      "id": "P1",
+      "required": [["r", "need"]],
+      "forbidden": [["r", "forbidden"]]
+    }
+  ],
+  "replacements": [],
+  "old_state": ["old"],
+  "must_keep": [
+    {"project": "P1", "capabilities": [["r", "k"]]}
+  ]
+}

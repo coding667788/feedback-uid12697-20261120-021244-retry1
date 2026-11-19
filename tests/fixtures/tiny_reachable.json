@@ -1,0 +1,28 @@
+{
+  "notes": [
+    "夹具1：小实例可达场景，用于独立枚举交叉校验目标与步数。",
+    "虚构能力标识，与任何真实构建代理无关。",
+    "预期最优终态 {a,c,e}（未申报0，成本3），最短路径2步：disable:old 后 enable:e。",
+    "本夹具不声明原子替换，专门覆盖 enable/disable 单步操作；替换场景见 atomic_replace_only。"
+  ],
+  "packages": [
+    {"id": "a", "project": "P1", "capabilities": [["repo", "read"]], "cost": 1, "conflicts": [], "requires": []},
+    {"id": "b", "project": "P1", "capabilities": [["repo", "read"], ["repo", "write"]], "cost": 1, "conflicts": [], "requires": []},
+    {"id": "c", "project": "P1", "capabilities": [["build", "run"]], "cost": 1, "conflicts": [], "requires": []},
+    {"id": "old", "project": "P1", "capabilities": [["repo", "read"], ["legacy", "exec"]], "cost": 4, "conflicts": [], "requires": []},
+    {"id": "e", "project": "P1", "capabilities": [["deploy", "roll"]], "cost": 1, "conflicts": [], "requires": [["c"]]},
+    {"id": "f", "project": "P1", "capabilities": [["deploy", "roll"], ["debug", "shell"]], "cost": 1, "conflicts": ["c"], "requires": [["a", "b"]]}
+  ],
+  "projects": [
+    {
+      "id": "P1",
+      "required": [["repo", "read"], ["build", "run"], ["deploy", "roll"]],
+      "forbidden": [["audit", "bypass"]]
+    }
+  ],
+  "replacements": [],
+  "old_state": ["a", "c", "old"],
+  "must_keep": [
+    {"project": "P1", "capabilities": [["repo", "read"], ["build", "run"]]}
+  ]
+}

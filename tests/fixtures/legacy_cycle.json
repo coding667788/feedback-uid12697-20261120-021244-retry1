@@ -1,0 +1,21 @@
+{
+  "notes": [
+    "夹具5：依赖循环可在旧态已存在，但无法单步新建。",
+    "旧状态 {cycleA,cycleB} 互相依赖形成环，属于历史包袱，加载合法；",
+    "solo 不依赖任何包，可停用后再启用（不产生新环）；",
+    "newbie 依赖 cycleA：若先停用 cycleA 再启用 newbie，会形成 newbie->cycleB->newbie 的新环，被拒绝；",
+    "只有先恢复 cycleA（回到旧态）再启用 newbie 才合法，新环永远无法通过单步构造。"
+  ],
+  "packages": [
+    {"id": "cycleA", "project": "P1", "capabilities": [["c", "a"]], "cost": 1, "conflicts": [], "requires": [["cycleB"]]},
+    {"id": "cycleB", "project": "P1", "capabilities": [["c", "b"]], "cost": 1, "conflicts": [], "requires": [["cycleA"]]},
+    {"id": "solo", "project": "P1", "capabilities": [["s", "k"]], "cost": 1, "conflicts": [], "requires": []},
+    {"id": "newbie", "project": "P1", "capabilities": [["n", "x"]], "cost": 1, "conflicts": [], "requires": [["cycleA"]]}
+  ],
+  "projects": [
+    {"id": "P1", "required": [["s", "k"], ["n", "x"]], "forbidden": []}
+  ],
+  "replacements": [],
+  "old_state": ["cycleA", "cycleB", "solo"],
+  "must_keep": []
+}

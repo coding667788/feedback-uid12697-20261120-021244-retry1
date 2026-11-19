@@ -1,0 +1,21 @@
+{
+  "notes": [
+    "夹具6：OR 依赖（任一候选前置包满足）与多前置条件，兼作 rollout 代次冲突/中途恢复夹具。",
+    "target 有两个依赖组：前置组一 (pre1|pre2) 满足其一即可，前置组二 pre3 必须启用，两组为 AND。",
+    "旧状态含 pre3，最短路径启用 pre1 再启用 target，共 2 步。"
+  ],
+  "packages": [
+    {"id": "pre1", "project": "P1", "capabilities": [["p", "one"]], "cost": 1, "conflicts": [], "requires": []},
+    {"id": "pre2", "project": "P1", "capabilities": [["p", "two"]], "cost": 4, "conflicts": [], "requires": []},
+    {"id": "pre3", "project": "P1", "capabilities": [["p", "three"]], "cost": 1, "conflicts": [], "requires": []},
+    {"id": "target", "project": "P1", "capabilities": [["t", "go"]], "cost": 2, "conflicts": [], "requires": [["pre1", "pre2"], ["pre3"]]}
+  ],
+  "projects": [
+    {"id": "P1", "required": [["t", "go"]], "forbidden": []}
+  ],
+  "replacements": [],
+  "old_state": ["pre3"],
+  "must_keep": [
+    {"project": "P1", "capabilities": [["p", "three"]]}
+  ]
+}

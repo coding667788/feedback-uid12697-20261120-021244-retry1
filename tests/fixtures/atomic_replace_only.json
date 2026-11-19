@@ -1,0 +1,26 @@
+{
+  "notes": [
+    "夹具3：只有原子替换才能通过。",
+    "old 与 new 冲突且共同承担必保能力 r.k；先停用 old 会丢失必保，先启用 new 触发冲突，",
+    "唯一合法单步是输入声明的原子替换 old->new，一步到达终态。"
+  ],
+  "packages": [
+    {"id": "old", "project": "P1", "capabilities": [["r", "k"], ["r", "legacy"]], "cost": 3, "conflicts": ["new"], "requires": []},
+    {"id": "new", "project": "P1", "capabilities": [["r", "k"], ["r", "need"]], "cost": 2, "conflicts": ["old"], "requires": []},
+    {"id": "extra", "project": "P1", "capabilities": [["r", "need"]], "cost": 7, "conflicts": [], "requires": []}
+  ],
+  "projects": [
+    {
+      "id": "P1",
+      "required": [["r", "k"], ["r", "need"]],
+      "forbidden": [["r", "blocked"]]
+    }
+  ],
+  "replacements": [
+    {"remove": "old", "add": "new"}
+  ],
+  "old_state": ["old"],
+  "must_keep": [
+    {"project": "P1", "capabilities": [["r", "k"]]}
+  ]
+}
